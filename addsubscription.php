@@ -19,17 +19,19 @@ if (!isset($_REQUEST) || count($_REQUEST)==0) {
   if (subExists($conn, $subName)) {
       $message = 'That subscription already exists';
   } else {  
-    $sql = "INSERT INTO subscriptions (subscriptionName) VALUES ('"
-      .$subName."')";
+    $sql = "INSERT INTO subscriptions (subscriptionName) VALUES (?)";
 
   //print $sql;
-  
-    if ($conn->query($sql)==TRUE) {
-      $last_id = $conn->insert_id; 
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $subName);
+    
+    if ($stmt->execute()==TRUE) {
+      //$last_id = $conn->insert_id; 
       $message = "Subscription successfully added";
     }else{
       $message = "Ooops. There was a problem adding the subscription";
     }
+    $stmt->close();
   }
   include 'addSubscription.html';
 }
@@ -42,7 +44,7 @@ function subExists($conn, $subName) {
     $stmt->execute();
     $stmt->bind_result($results);
     $stmt->fetch();    
-    
+    $stmt->close();
   }
   //$result = $conn->query($sql);
   //var_dump($results);
