@@ -36,9 +36,17 @@ if (!isset($_REQUEST) || count($_REQUEST)==0) {
 
 
 function subExists($conn, $subName) {
-  $sql = "SELECT subscriptionName from subscriptions where subscriptionName = '".$subName."'";
-  $result = $conn->query($sql);
-  if ($result->num_rows > 0) {
+  $sql = "SELECT subscriptionName from subscriptions where subscriptionName = ?";
+  if ($stmt = $conn->prepare($sql)) {
+    $stmt->bind_param("s",$subName);
+    $stmt->execute();
+    $stmt->bind_result($results);
+    $stmt->fetch();    
+    
+  }
+  //$result = $conn->query($sql);
+  //var_dump($results);
+  if ($results != null) {
     return TRUE;
   } else {
     return FALSE;
