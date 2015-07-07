@@ -5,6 +5,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+funtion addAliases($folderName=''){
+  
+  if ($folderName==''){
+    include 'getfoldername.html';
+  }
+}
+
 include'includes/databaseConnection.php';
 include'includes/includeFunctions.php';
 include'headerfile.html';
@@ -15,7 +22,6 @@ $message = '';
 $subInfo = array();
 $subInput = '';
 
-//Get the list of subscriptions for HTML form
 $sql = "SELECT * FROM SUBSCRIPTIONS";
 $conn = dbConnect();
 $result = $conn->query($sql);
