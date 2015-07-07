@@ -13,28 +13,29 @@ include'includes/includeFunctions.php';
 $message = '';
 
 if (!isset($_REQUEST) || count($_REQUEST)==0) {
-  include 'addSubscription.html';
+  include 'addfolder.html';
 } else {
-  $subName = $_POST['subscriptionName'];
+
+  $siteName = $_POST['folderName'];
   $conn = dbConnect();
-  if (subExists($conn, $subName, 'subscriptionName', 'subscriptions')) {
-      $message = 'That subscription already exists';
+  if (subExists($conn, $siteName, 'folderName', 'sitefolders')) {
+      $message = 'That siteFolder already exists';
   } else {  
-    $sql = "INSERT INTO subscriptions (subscriptionName) VALUES (?)";
+    $sql = "INSERT INTO sitefolders (folderName) VALUES (?)";
 
   //print $sql;
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $subName);
+    $stmt->bind_param("s", $siteName);
     
     if ($stmt->execute()==TRUE) {
       //$last_id = $conn->insert_id; 
-      $message = "Subscription successfully added";
+      $message = "Site folder successfully added";
     }else{
-      $message = "Ooops. There was a problem adding the subscription";
+      $message = "Ooops. There was a problem adding the siteFolder";
     }
     $stmt->close();
   }
-  include 'addSubscription.html';
+  include 'addfolder.html';
 }
 
 
