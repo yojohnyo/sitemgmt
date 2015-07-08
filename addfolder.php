@@ -54,10 +54,11 @@ if (!isset($_REQUEST) || count($_REQUEST)==0) {
   } elseif ($siteName == '' || $subID == -1) {
       $message = 'That was not a valid entry';
   } else {
-$message = addDBPrepare($conn, $siteName, $subID, 'siteFolders', 'folderName', 'subscriptionID');
+$message = addDBPrepare($conn, $siteName, $subID, 'siteFolders', 'folderName', 'subscriptionsID');
   addAliases($siteName,$message);
   
   }
+  connectClose($conn);
   //include 'addfolder.html';
 }
 
