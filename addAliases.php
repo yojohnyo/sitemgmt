@@ -5,75 +5,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-funtion addAliases($folderName=''){
-  
-  if ($folderName==''){
-    include 'getfoldername.html';
-  }
-}
+
 
 include'includes/databaseConnection.php';
 include'includes/includeFunctions.php';
-include'headerfile.html';
-
-//check to see if it needs to display add subscription form
-
-$message = '';
-$subInfo = array();
-$subInput = '';
-
-$sql = "SELECT * FROM SUBSCRIPTIONS";
-$conn = dbConnect();
-$result = $conn->query($sql);
-if ($result->num_rows > 0){
-  while($row = $result->fetch_assoc()) {
-    //var_dump($row);
-    $subInfo[$row['id']]=$row['subscriptionName'];
-    $subInput .='<input type="radio" name="subID" value="'.$row['id'].'">'.$row['subscriptionName'].'<br>';
-  }
-
-  //print $subInput;
-  //var_dump($subInfo);
-  } else {
-  echo "No results returned";
-}
-connectClose($conn);
-
-//If first time on page, render the page
-if (!isset($_REQUEST) || count($_REQUEST)==0) {
-  include 'addfolder.html';
-} else {
-
-  $siteName = $_POST['folderName'];
-  
-  // Check for case where no radio button selected
-  if (!isset($_POST['subID'])) {
-    $subID =-1;
-  } else {
-    $subID = $_POST['subID'];
-  }
+$folderName = $_POST['folderName'];
+//Get folder ID
+$folderID = getID($conn, $folderName, 'folderName', 'siteFolders');
+$count = 1;
+while (isset($_POST['alias' . $count])) {
+  $subName = $_POST['alias' . $count];
   $conn = dbConnect();
-  //Verify the folder doesn't already exist
-  if (subExists($conn, $siteName, 'folderName', 'sitefolders')) {
-      $message = 'That siteolder already exists';
-  } elseif ($siteName == '' || $subID == -1) {
-      $message = 'That was not a valid entry';
+  $count += 1;
+  //Make sure alias doesn't already exist
+  if (subExists($conn, $subName, 'aliasName', 'aliases')) {
+    print('The alias ' . $subName . ' already exists');
   } else {
-    $sql = "INSERT INTO sitefolders (folderName, subscriptionsID) VALUES (?,?)";
-
-  //print $sql;
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $siteName, $subID);
-    
-    if ($stmt->execute()==TRUE) {
-      //$last_id = $conn->insert_id; 
-      $message = "Site folder successfully added";
-    }else{
-      $message = "Ooops. There was a problem adding the siteFolder";
-    }
-    $stmt->close();
+    $sql = "INSERT INTO aliasName (aliasName, folderNameID) VALUES (?,?)";
   }
-  include 'addfolder.html';
-}
-
+} 
 

@@ -8,6 +8,7 @@
 include'includes/databaseConnection.php';
 include'includes/includeFunctions.php';
 include'headerfile.html';
+//include'addAliases.php';
 
 //check to see if it needs to display add subscription form
 
@@ -53,21 +54,11 @@ if (!isset($_REQUEST) || count($_REQUEST)==0) {
   } elseif ($siteName == '' || $subID == -1) {
       $message = 'That was not a valid entry';
   } else {
-    $sql = "INSERT INTO sitefolders (folderName, subscriptionsID) VALUES (?,?)";
-
-  //print $sql;
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $siteName, $subID);
-    
-    if ($stmt->execute()==TRUE) {
-      //$last_id = $conn->insert_id; 
-      $message = "Site folder successfully added";
-    }else{
-      $message = "Ooops. There was a problem adding the siteFolder";
-    }
-    $stmt->close();
+$message = addDBPrepare($conn, $siteName, $subID, 'siteFolders', 'folderName', 'subscriptionID');
+  addAliases($siteName,$message);
+  
   }
-  include 'addfolder.html';
+  //include 'addfolder.html';
 }
 
 
