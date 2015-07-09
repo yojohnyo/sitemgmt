@@ -31,9 +31,18 @@ $sqlAlias = "CREATE TABLE aliases ("
     . "create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
     . ")";
 
+$sqlFileContents = "CREATE TABLE fileContents ("
+    . "id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,"
+    . "fileHead LONGTEXT NOT NULL,"
+    . "fileEnd LONGTEXT NOT NULL,"
+    . "fileSubstitution LONGTEXT NOT NULL,"
+    . "create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+    . ")";
 
 
-if ($conn->query($sqlSub) === TRUE && $conn->query($sqlFolder) === TRUE && $conn->query($sqlAlias)) { 
+
+if ($conn->query($sqlSub) === TRUE && $conn->query($sqlFolder) === TRUE && $conn->query($sqlAlias)
+    && $conn->query($sqlFolder)) { 
   echo "Tables created successfully ";
 } else {
     echo "Error creating table: " . $conn->error;

@@ -29,4 +29,4 @@ while (isset($_POST['alias' . $count])) {
   $message .='<br>';
 }
 connectClose($conn);
-print $message;
+include 'index.php';
