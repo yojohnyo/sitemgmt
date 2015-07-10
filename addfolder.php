@@ -55,6 +55,7 @@ if (!isset($_REQUEST) || count($_REQUEST)==0) {
       $message = 'That was not a valid entry';
   } else {
 $message = addDBPrepare($conn, $siteName, $subID, 'siteFolders', 'folderName', 'subscriptionsID');
+//Since adding a folder should always include adding aliases, call function to add aliases
   addAliases($siteName,$message);
   
   }

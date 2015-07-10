@@ -35,9 +35,11 @@ function addAliases($folderName = '', $message = '') {
     //Foldername called, assume coming from add folder
     //Render the input text fields
     $titleMsg = '<h1> Adding aliases for ' . $folderName . '</h1>';
+    $dbName = str_replace('-','_',strtok($folderName, "."));
     $devAlias = preg_replace('/\./', '-dev.', $folderName, 1);
     $stgAlias = preg_replace('/\./', '-stg.', $folderName, 1);
-    $output = '<p>Please enter the dev alias: <input type="text" name="alias1" value="' . $devAlias . '">';
+    $output = '<p>Please verify the database name: <input type="text" name="database" value="'.$dbName.'">';
+    $output .= '<p>Please enter the dev alias: <input type="text" name="alias1" value="' . $devAlias . '">';
     $output .= '<p>Please enter the stg alias: <input type="text" name="alias2" value="' . $stgAlias . '">';
     $output .= '<input type="hidden" name="folderName" value="' . $folderName . '">';
     include 'getdevaliases.html';
