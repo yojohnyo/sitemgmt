@@ -75,3 +75,21 @@ function addDBPrepare($conn, $name, $id, $table, $nameColumn, $idColumn) {
   $stmt->close();
   return $message;
 }
+
+function updateDBPrepare($conn, $name, $id, $table, $nameColumn, $idColumn) {
+  //insert the new folder name $siteName to subscription ID $subID
+  $sql = "UPDATE ".$table." SET ". $nameColumn . "= ? WHERE " . $idColumn . " = ?";
+  print $sql;
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("si", $name, $id);
+
+  if ($stmt->execute() == TRUE) {
+    //$last_id = $conn->insert_id; 
+    $message = $name . " successfully added";
+  }
+  else {
+    $message = "Ooops. There was a problem adding the siteFolder";
+  }
+  $stmt->close();
+  return $message;
+}
