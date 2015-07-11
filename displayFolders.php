@@ -9,18 +9,32 @@
 include'includes/databaseConnection.php';
 include'includes/includeFunctions.php';
 
+include 'index.php';
+$sql = "SELECT subscriptionName, id FROM subscriptions";
+
+$conn = dbConnect();
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+  $output = 'Filter on subscription: <select>'
+      . '<option value="none">None</option>';
+  while ($row = $result->fetch_assoc()) {
+    $output.='<option value="'.$row['id'].'">'.$row['subscriptionName'].'</option>';
+  }
+  $output .='</select>';
+}
+
 $sql = "SELECT subscriptions.subscriptionName, sitefolders.folderName "
     . "FROM subscriptions INNER JOIN sitefolders "
     . "WHERE subscriptions.id = sitefolders.subscriptionsID "
     . "ORDER BY subscriptions.subscriptionName";
 //print $sql;
-include 'index.php';
 
-$output = '<table border="1">'
+
+$output .= '<table border="1">'
     . '<th>Subscription Name</th>'
     . '<th>Folder Name</th>';
 
-$conn = dbConnect();
+
 $result = $conn->query($sql);
 if ($result->num_rows > 0){
   while($row = $result->fetch_assoc()) {
