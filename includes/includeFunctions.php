@@ -6,6 +6,8 @@
  * and open the template in the editor.
  */
 
+//Check if an entity already exists in the DB
+//Takes in connection string, entity, column name, tableName
 function subExists($conn, $subName, $columnName, $tableName) {
   $sql = "SELECT " . $columnName . " from " . $tableName . " where " . $columnName . " = ?";
   //print $sql;

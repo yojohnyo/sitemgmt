@@ -51,8 +51,10 @@ if (!isset($_REQUEST) || count($_REQUEST)==0) {
   //Verify the folder doesn't already exist
   if (subExists($conn, $siteName, 'folderName', 'sitefolders')) {
       $message = 'That siteolder already exists';
+      include 'addfolder.html';
   } elseif ($siteName == '' || $subID == -1) {
       $message = 'That was not a valid entry';
+      include 'addfolder.html';
   } else {
 $message = addDBPrepare($conn, $siteName, $subID, 'siteFolders', 'folderName', 'subscriptionsID');
 //Since adding a folder should always include adding aliases, call function to add aliases
