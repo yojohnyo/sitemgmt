@@ -6,8 +6,9 @@
 
 function filterDisplay(str) {
     if (str == "") {
-        document.getElementById("txtHint").innerHTML = "";
-        return;
+        document.getElementById("txtHint").innerHTML = "-1";
+                xmlhttp.open("GET","renderdisfolderajax.php?q="+str,true);
+        xmlhttp.send();
     } else { 
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -21,7 +22,7 @@ function filterDisplay(str) {
                 document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
             }
         }
-        xmlhttp.open("GET","displayFolders.php?q="+str,true);
+        xmlhttp.open("GET","renderdisfolderajax.php?q="+str,true);
         xmlhttp.send();
     }
 }

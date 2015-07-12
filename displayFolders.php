@@ -11,48 +11,20 @@ include'includes/includeFunctions.php';
 //include'javascriptincludes.js';
 include 'index.php';
 
-if (isset($_GET['q'])){
-  $q = " AND subscriptions.id = ".intval($_GET['q']);
-} else {
-  $q = "";
-}
+//Generate list of subscriptions to display
 $sql = "SELECT subscriptionName, id FROM subscriptions";
 
 $conn = dbConnect();
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
   $output = 'Filter on subscription: <select onchange="filterDisplay(this.value)">'
-      . '<option value="">None</option>';
+      . '<option value="-1">None</option>';
   while ($row = $result->fetch_assoc()) {
     $output.='<option value="'.$row['id'].'">'.$row['subscriptionName'].'</option>';
   }
   $output .='</select>';
 }
 print $output;
-$sql = "SELECT subscriptions.subscriptionName, sitefolders.folderName "
-    . "FROM subscriptions INNER JOIN sitefolders "
-    . "WHERE subscriptions.id = sitefolders.subscriptionsID ".$q
-    . " ORDER BY subscriptions.subscriptionName";
-print $sql;
-
-
-$output = '<div id="txtHint"><table border="1">'
-    . '<th>Subscription Name</th>'
-    . '<th>Folder Name</th>';
-
-
-$result = $conn->query($sql);
-if ($result->num_rows > 0){
-  while($row = $result->fetch_assoc()) {
-    //var_dump($row);
-    $output .='<tr>';
-    foreach ($row as $key=>$value){
-      $output.='<td>'.$value.'</td>';
-    }
-    $output .='</tr>';
-  }
-  $output .='</table></div>';
-  print $output;
-} else {
-  $message = "No folders were found";
-}
+connectClose($conn);
+//Need to separate rendering of the page so when AJAX is called, this page isn't rendered again
+include 'renderdisfolderajax.php';
