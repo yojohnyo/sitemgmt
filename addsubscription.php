@@ -7,6 +7,7 @@
  */
 include'includes/databaseConnection.php';
 include'includes/includeFunctions.php';
+include 'index.php';
 
 //check to see if it needs to display add subscription form
 
