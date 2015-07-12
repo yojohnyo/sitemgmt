@@ -8,29 +8,35 @@
 
 include'includes/databaseConnection.php';
 include'includes/includeFunctions.php';
-
+//include'javascriptincludes.js';
 include 'index.php';
+
+if (isset($_GET['q'])){
+  $q = " AND subscriptions.id = ".intval($_GET['q']);
+} else {
+  $q = "";
+}
 $sql = "SELECT subscriptionName, id FROM subscriptions";
 
 $conn = dbConnect();
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
-  $output = 'Filter on subscription: <select>'
-      . '<option value="none">None</option>';
+  $output = 'Filter on subscription: <select onchange="filterDisplay(this.value)">'
+      . '<option value="">None</option>';
   while ($row = $result->fetch_assoc()) {
     $output.='<option value="'.$row['id'].'">'.$row['subscriptionName'].'</option>';
   }
   $output .='</select>';
 }
-
+print $output;
 $sql = "SELECT subscriptions.subscriptionName, sitefolders.folderName "
     . "FROM subscriptions INNER JOIN sitefolders "
-    . "WHERE subscriptions.id = sitefolders.subscriptionsID "
-    . "ORDER BY subscriptions.subscriptionName";
-//print $sql;
+    . "WHERE subscriptions.id = sitefolders.subscriptionsID ".$q
+    . " ORDER BY subscriptions.subscriptionName";
+print $sql;
 
 
-$output .= '<table border="1">'
+$output = '<div id="txtHint"><table border="1">'
     . '<th>Subscription Name</th>'
     . '<th>Folder Name</th>';
 
@@ -45,7 +51,7 @@ if ($result->num_rows > 0){
     }
     $output .='</tr>';
   }
-  $output .='</table>';
+  $output .='</table></div>';
   print $output;
 } else {
   $message = "No folders were found";
