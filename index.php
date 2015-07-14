@@ -4,9 +4,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-  include'includes/databaseConnection.php';
+  /*include'includes/databaseConnection.php';
   include'includes/includeFunctions.php'; 
-include 'verifySubscription.php';
+include 'verifySubscription.php';*/
 print '
   <html>
     <head>

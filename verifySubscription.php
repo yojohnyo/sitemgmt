@@ -56,14 +56,9 @@ function newSubs() {
   }
   connectClose($conn);
   if (count($newSubs) < 1) {
-    return False;
+    return "There are no new subscriptions to be added";
   }
   else {
-    return $newSubs;
-  }
-}
-
-function listNewSubs($newSubs) {
     $message = 'The following subs have not yet been recorded:';
     $message .='<ul>';
     foreach ($newSubs as $sub) {
@@ -72,6 +67,7 @@ function listNewSubs($newSubs) {
     $message .= '</ul>';
     //include 'addSubscription.html';
     return $message;
+}
 }
 
 //newSubs();

@@ -5,18 +5,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/*include'includes/databaseConnection.php';
+include'includes/databaseConnection.php';
 include'includes/includeFunctions.php'; 
 include 'verifySubscription.php';
-*/
+
 
 //check to see if it needs to display add subscription form
 
 $message = '';
 print isset($_POST['add']);
 if (!isset($_POST['add'])) {
-    //include 'index.php'; 
-  newSubs();
+    $message = newSubs();
+    include 'index.php';
+    include 'addSubscription.html';
+
 }else{
   $form_input = $_POST;
 
@@ -32,7 +34,7 @@ if ($form_input['add'] == 'Yes') {
   $message = 'No subscriptions were added';
 }
 
-include 'addfolder.php';
+include 'index.php';
 }
 
 //$conn = connect();
