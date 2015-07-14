@@ -5,15 +5,51 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-include'includes/databaseConnection.php';
-include'includes/includeFunctions.php';
-include 'index.php';
+/*include'includes/databaseConnection.php';
+include'includes/includeFunctions.php'; 
+include 'verifySubscription.php';
+*/
 
 //check to see if it needs to display add subscription form
 
 $message = '';
+print isset($_POST['add']);
+if (!isset($_POST['add'])) {
+    //include 'index.php'; 
+  newSubs();
+}else{
+  $form_input = $_POST;
 
-if (!isset($_REQUEST) || count($_REQUEST)==0) {
+//var_dump($form_input);
+
+if ($form_input['add'] == 'Yes') {
+  $conn = dbConnect();
+  $subs = getAcquiaSubInfo();
+  foreach ($subs as $newSub) {
+    $message .= writeToTable($newSub, $conn);
+  }
+} else {
+  $message = 'No subscriptions were added';
+}
+
+include 'addfolder.php';
+}
+
+//$conn = connect();
+function writeToTable($subscriptionName, $conn){
+
+  $sql = "INSERT INTO subscriptions (subscriptionName) VALUES"
+    . "('".$subscriptionName."')";
+
+  if ($conn->query($sql)==TRUE) {
+    $last_id = $conn->insert_id; 
+    return $subscriptionName.' successfully added<br>';
+  }else{
+    return "Failure";
+  }
+}
+
+/*if (!isset($_REQUEST) || count($_REQUEST)==0) {
   include 'addSubscription.html';
 } else {
   $subName = $_POST['subscriptionName'];
@@ -36,6 +72,6 @@ if (!isset($_REQUEST) || count($_REQUEST)==0) {
     $stmt->close();
   }
   include 'addSubscription.html';
-}
+}*/
 
 

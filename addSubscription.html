@@ -16,8 +16,10 @@ and open the template in the editor.
                 <?php print $message;?>
             </div>
             <form action="addsubscription.php" method="POST">
-                <p>Enter subscription name to add:
-                    <input type="text" name="subscriptionName">
+                <p>Would you like to add them now?<br>
+                    <input type="radio" name="add" value="Yes" CHECKED>Yes
+                    <br>
+                    <input type="radio" name="add" value="No">No
                 </p>
                 <input type="submit" name="Add Subscription">
             </form>
