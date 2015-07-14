@@ -15,22 +15,30 @@ include 'verifySubscription.php';
 $message = '';
 print isset($_POST['add']);
 if (!isset($_POST['add'])) {
-    $message = newSubs();
-    if ($message == -1) {
-      $message = "There are no new subscriptions to be added";
-          include 'index.php';
-    } else {
-          include 'index.php';
-    include 'addSubscription.html';
+  $newSubs = newSubs();
+  if (count($newSubs) < 1) {
+    $message = "There are no new subscriptions to be added";
+    include 'index.php';
+  }
+  else {
+    $message = 'The following subs have not yet been recorded:';
+    $message .='<ul>';
+    foreach ($newSubs as $sub) {
+      $message .= '<li>' . $sub . '</li>';
     }
-}else{
+    $message .= '</ul>';
+    include 'index.php';
+    include 'addSubscription.html';
+  }
+}
+else {
   $form_input = $_POST;
 
 //var_dump($form_input);
 
 if ($form_input['add'] == 'Yes') {
   $conn = dbConnect();
-  $subs = getAcquiaSubInfo();
+  $subs = newSubs();
   foreach ($subs as $newSub) {
     $message .= writeToTable($newSub, $conn);
   }

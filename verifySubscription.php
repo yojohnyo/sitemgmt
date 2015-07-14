@@ -55,7 +55,9 @@ function newSubs() {
     }
   }
   connectClose($conn);
-  if (count($newSubs) < 1) {
+  return $newSubs;
+}
+  /*if (count($newSubs) < 1) {
     //return "There are no new subscriptions to be added";
     return -1;
   }
@@ -69,6 +71,6 @@ function newSubs() {
     //include 'addSubscription.html';
     return $message;
 }
-}
+}*/
 
 //newSubs();
