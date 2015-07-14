@@ -16,9 +16,13 @@ $message = '';
 print isset($_POST['add']);
 if (!isset($_POST['add'])) {
     $message = newSubs();
-    include 'index.php';
+    if ($message == -1) {
+      $message = "There are no new subscriptions to be added";
+          include 'index.php';
+    } else {
+          include 'index.php';
     include 'addSubscription.html';
-
+    }
 }else{
   $form_input = $_POST;
 
