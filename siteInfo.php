@@ -13,7 +13,6 @@ include'index.php';
 $folderID = $_GET['folderID'];
 //print $folderID;
 $folderInfo = folderSubInfo($folderID);
-$message ='Hello';
 
 $output = '<p><table border="2">'
     . '<tr><td>Folder Name:</td><td>'.$folderInfo['folderName'].'</td></tr>'

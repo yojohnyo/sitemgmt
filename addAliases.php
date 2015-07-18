@@ -32,10 +32,10 @@ if (subExists($conn, $subName, 'aliasName', 'aliases')) {
   $validEntry = False;
   $message.='The alias ' . $subName . ' already exists';
 }
-
 $message .='<br>';
 }
-//Checkk for valid database entry
+
+//Check for valid database entry
 if (isset($_POST['database'])) {
   $dbName = $_POST['database'];
   //Verify db doesn't already exist
@@ -44,6 +44,7 @@ if (isset($_POST['database'])) {
     $message .= "The database already exists";
   }
 }
+
 //If the aliases or db are not valid, return to the alias entry screen
 if (!$validEntry){
   connectClose($conn);
