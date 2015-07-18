@@ -32,17 +32,17 @@ if (isset($jsfile)) {
             <li><a href="addSubscription.php">Add Subscription</a></li>
             <li><a href="addfolder.php">Add Folder</a></li>
             <li><a href="displayFolders.php">Display folder</a></li>
+            <li><a href="addAliases.php">Add Aliases</a></li>
           </ul>
         </div>
       </nav>
 
-    </div>      
-    <div id="message">
-      <?php
-      if (isset($message))
-        print $message;
-      ?>
-    </div>
+    </div> 
+    <?php
+    if (isset($message))
+      print '<div id="message">' . $message . '</div>';
+    ?>
+
 
 
 </body>

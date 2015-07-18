@@ -17,7 +17,7 @@ if (isset($_GET['q'])){
     $q = "";
   }
 }
-$sql = "SELECT subscriptions.subscriptionName, sitefolders.folderName "
+$sql = "SELECT subscriptions.subscriptionName, sitefolders.folderName, sitefolders.id "
     . "FROM subscriptions INNER JOIN sitefolders "
     . "WHERE subscriptions.id = sitefolders.subscriptionsID ".$q
     . " ORDER BY subscriptions.subscriptionName, sitefolders.folderName";
@@ -34,7 +34,11 @@ if ($result->num_rows > 0){
     //var_dump($row);
     $output .='<tr>';
     foreach ($row as $key=>$value){
+      if ($key != 'id'){
       $output.='<td>'.$value.'</td>';
+      } else {
+        $output.='<td><a href ="siteInfo.php?folderID='.$value.'">Site Information</a></td>';
+      }
     }
     $output .='</tr>';
   }
