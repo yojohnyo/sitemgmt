@@ -30,12 +30,13 @@ function subExists($conn, $subName, $columnName, $tableName) {
 
 function addAliases($folderName = '', $message = '') {
 
-  if ($folderName == '') {
-    include 'getfoldername.html';
-  }
-  else {
+  
     //Foldername called, assume coming from add folder
     //Render the input text fields
+    if (isset($_REQUEST["q"])) {
+      $q = $_REQUEST["q"];
+      var_dump($q);
+    }
     $titleMsg = '<h1> Adding aliases for ' . $folderName . '</h1>';
     $dbName = str_replace('-','_',strtok($folderName, "."));
     $devAlias = preg_replace('/\./', '-dev.', $folderName, 1);
@@ -43,9 +44,9 @@ function addAliases($folderName = '', $message = '') {
     $output = '<p>Please verify the database name: <input type="text" name="database" value="'.$dbName.'">';
     $output .= '<p>Please enter the dev alias: <input type="text" name="alias1" value="' . $devAlias . '">';
     $output .= '<p>Please enter the stg alias: <input type="text" name="alias2" value="' . $stgAlias . '">';
-    $output .= '<input type="hidden" name="folderName" value="' . $folderName . '">';
-    include 'getdevaliases.html';
-  }
+    $output .= '<input type="hidden" name="folderName" value="' . $folderName . '"><p>';
+    print $output;
+    //include 'getdevaliases.html';
 }
 
 function getID($conn, $folderName, $column, $table) {
@@ -92,4 +93,30 @@ function updateDBPrepare($conn, $name, $id, $table, $nameColumn, $idColumn) {
   }
   $stmt->close();
   return $message;
+}
+
+function getSubs() {
+  $message = '';
+  $subInfo = array();
+  $subInput = '';
+
+//Get the list of subscriptions for HTML form
+  $sql = "SELECT * FROM SUBSCRIPTIONS";
+  $conn = dbConnect();
+  $result = $conn->query($sql);
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      //var_dump($row);
+      $subInfo[$row['id']] = $row['subscriptionName'];
+      $subInput .='<input type="radio" name="subID" value="' . $row['id'] . '">' . $row['subscriptionName'] . '<br>';
+    }
+
+    //print $subInput;
+    //var_dump($subInfo);
+  }
+  else {
+    echo "No results returned";
+  }
+  connectClose($conn);
+  return $subInput;
 }

@@ -13,26 +13,6 @@ include'headerfile.html';
 //check to see if it needs to display add subscription form
 
 $message = '';
-$subInfo = array();
-$subInput = '';
-
-//Get the list of subscriptions for HTML form
-$sql = "SELECT * FROM SUBSCRIPTIONS";
-$conn = dbConnect();
-$result = $conn->query($sql);
-if ($result->num_rows > 0){
-  while($row = $result->fetch_assoc()) {
-    //var_dump($row);
-    $subInfo[$row['id']]=$row['subscriptionName'];
-    $subInput .='<input type="radio" name="subID" value="'.$row['id'].'">'.$row['subscriptionName'].'<br>';
-  }
-
-  //print $subInput;
-  //var_dump($subInfo);
-  } else {
-  echo "No results returned";
-}
-connectClose($conn);
 
 //If first time on page, render the page
 if (!isset($_REQUEST) || count($_REQUEST)==0) {
