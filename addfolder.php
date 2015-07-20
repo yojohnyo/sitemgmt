@@ -17,32 +17,66 @@ $message = '';
 //If first time on page, render the page
 if (!isset($_REQUEST) || count($_REQUEST)==0) {
   include 'addfolder.html';
-} else {
-
-  $siteName = $_POST['folderName'];
-  
-  // Check for case where no radio button selected
-  if (!isset($_POST['subID'])) {
-    $subID =-1;
-  } else {
-    $subID = $_POST['subID'];
-  }
+} else {  
+  // Check to make sure there are no duplicate records
+  $returnValue = True;
+  //var_dump($_POST);
   $conn = dbConnect();
-  //Verify the folder doesn't already exist
-  if (subExists($conn, $siteName, 'folderName', 'sitefolders')) {
-      $message = 'That siteolder already exists';
-      include 'addfolder.html';
-  } elseif ($siteName == '' || $subID == -1) {
-      $message = 'That was not a valid entry';
-      include 'addfolder.html';
-  } else {
-$message = addDBPrepare($conn, $siteName, $subID, 'siteFolders', 'folderName', 'subscriptionsID');
-//Since adding a folder should always include adding aliases, call function to add aliases
-  addAliases($siteName,$message);
-  
+  foreach ($_POST as $key => $value) {
+    switch ($key) {
+      case 'folderName':
+        $folderName = strtolower($value);
+        if (subExists($conn, $folderName, 'folderName', 'sitefolders')) {
+          $message .= 'The sitefolder '.$folderName.' already exists<br>';
+          $returnValue = False;
+        }
+        break;
+      case 'database':
+        $dbName = strtolower($value);
+        if (subExists($conn, $dbName, 'databaseName', 'sitefolders')) {
+          $message .= 'The database: '.$dbName.' already exists';
+          $returnValue = False;
+        }
+        break;
+      case 'alias1':
+        $alias1 = strtolower($value);
+        if (subExists($conn, $alias1, 'aliasName', 'aliases')) {
+          $message .= 'The alias: ' . $alias1 . ' already exists';
+          $returnValue = False;
+        }
+        break;
+      case 'alias2':
+        $alias2 = strtolower($value);
+        if (subExists($conn, $alias2, 'aliasName', 'aliases')) {
+          $message .= 'The alias: ' . $alias2 . ' already exists';
+          $returnValue = False;
+        }
+        break;
+    }
   }
   connectClose($conn);
-  //include 'addfolder.html';
-}
 
+  if ((!isset($_POST['subID'])) || (!isset($_POST['folderName'])) || ($_POST['database'] == '') ||
+      ($_POST['alias1'] == '') || $_POST['alias2'] == '') {
+    $message .= 'A required value is missing';
+    $returnValue = False;
+  }
+
+  if (!$returnValue) {
+    include 'addfolder.html';
+  }
+  else {
+    $conn = dbConnect();
+    //Write values to siteFolder table
+    $message .= addSitePrepare($conn, $folderName, $_POST['subID'], $dbName).'<br>';
+    //Write aliases to siteFolder table
+    $folderID = getID($conn, $folderName, 'folderName', 'sitefolders');
+    //print 'folderName '.$folderID;
+    $message .= addDBPrepare($conn, $alias1, $folderID, 'aliases', 'aliasName', 'folderNameID').'<br>';
+    $message .= addDBPrepare($conn, $alias2, $folderID, 'aliases', 'aliasName', 'folderNameID').'<br>';
+    connectClose($conn);
+    print $message;
+  }
+  //include 'index.php';
+}
 
