@@ -21,7 +21,9 @@ $sqlFolder = "CREATE TABLE siteFolders ("
     . "id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,"
     . "folderName VARCHAR(30) NOT NULL,"
     . "subscriptionsID INT(6) NOT NULL,"
-    . "databaseName VARCHAR(30) NOT NULL"
+    . "databaseName VARCHAR(30) NOT NULL,"
+    . "repositoryName VARCHAR(30),"
+    . "launchDate TIMESTAMP,"
     . "create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
     . ")";
 

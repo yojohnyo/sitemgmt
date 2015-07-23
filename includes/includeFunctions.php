@@ -79,7 +79,8 @@ function addDBPrepare($conn, $name, $id, $table, $nameColumn, $idColumn) {
 
 function addSitePrepare($conn, $name, $id, $database) {
   //insert the new folder name $siteName to subscription ID $subID
-  $sql = "INSERT INTO sitefolders (folderName, id, databaseName) VALUES (?,?,?)";
+  //print $id." ".$database." - ".$name."<br>";
+  $sql = "INSERT INTO sitefolders (folderName, subscriptionsID, databaseName) VALUES (?,?,?)";
   //print $sql;
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("sss", $name, $id, $database);
@@ -137,4 +138,42 @@ function getSubs() {
   }
   connectClose($conn);
   return $subInput;
+}
+
+
+function writeDBtoAcquia($dbName, $subName) {
+
+      include('includes/acquiaCredentials.php');
+
+  $postfields = array('db' => $dbName);
+  $url_for_site = "https://cloudapi.acquia.com/v1/sites/devcloud:".$subName."/dbs.json";
+  $json_data = json_encode($postfields);
+
+  //Set as post
+  //curl_setopt($ch, CURLOPT_POST, true);
+  $ch = curl_init($url_for_site);
+  // set credentials
+  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+  curl_setopt($ch, CURLOPT_HTTPAUTH, TRUE);
+  curl_setopt($ch, CURLOPT_USERPWD, $username_key);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    'Content-Type: application/json;charset=utf-8',
+    'Content-Length: ' . strlen($json_data))
+  );
+  //return the transfer as a string 
+  // $output contains the output string 
+  $output = curl_exec($ch);
+  $curl_info = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+  //Check results
+  if ($output) {
+    $returnString = "DB Add successful";
+  }
+  else {
+    $returnString = "DB add failed";
+  }
+  // close curl resource to free up system resources 
+  curl_close($ch);
+  return $returnString;
 }
