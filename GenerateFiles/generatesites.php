@@ -6,8 +6,8 @@
  * and open the template in the editor.
  */
 
-include'includes/databaseConnection.php';
-include'includes/includeFunctions.php';
+include_once '../includes/databaseConnection.php';
+include_once '../includes/includeFunctions.php';
 
 
 $conn = dbConnect();
