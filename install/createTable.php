@@ -50,6 +50,10 @@ $sqlAlias = "CREATE TABLE siteOwners ("
     . "create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
     . ")";
 
+$sqlEntityID = "CREATE TABLE entityID (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+entityID VARCHAR(30) NOT NULL)";
+
 if ($conn->query($sqlSub) === TRUE && $conn->query($sqlFolder) === TRUE && $conn->query($sqlAlias)
     && $conn->query($sqlFolder)) { 
   echo "Tables created successfully ";
