@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Site Owner</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div>
+    <div id="alertmsg">
+        <?php print $message;?>
+    </div>
+    <form action="addSiteOwner.php" method="POST">
+        <p>Enter the First Name<br>
+            <input type="text" name="firstName">
+        </p>
+        <p>Enter the Last Name<br>
+            <input type="text" name="lastName">
+        </p>
+        <p>Enter the Email Address<br>
+            <input type="text" name="ownerEmail">
+        </p>
+        <p>Enter the Department<br>
+            <input type="text" name="dept">
+        </p>
+
+        <input type="submit" name="Add Site Owner" value="Add Site Owner">
+    </form>
+</div>
+</body>
+</html>

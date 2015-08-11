@@ -42,9 +42,10 @@ $sqlFileContents = "CREATE TABLE fileContents ("
     . "create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
     . ")";
 
-$sqlAlias = "CREATE TABLE siteOwners ("
+$sqlOwner = "CREATE TABLE siteOwners ("
     . "id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,"
-    . "ownerName VARCHAR(30) NOT NULL,"
+    . "ownerFirstName VARCHAR(30) NOT NULL,"
+    . "ownerLastName VARCHAR(30) NOT NULL,"
     . "ownerEmail VARCHAR(30) NOT NULL,"
     . "ownerDept VARCHAR(30) NOT NULL,"
     . "create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP"

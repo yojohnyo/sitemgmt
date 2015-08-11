@@ -204,3 +204,22 @@ function getFolderName($conn, $folderID) {
     //print $folderID;
     return $folderName;
 }
+
+function addSiteOwnerPrepare($conn, $ownerFirstName, $ownerLastName, $ownerEmail, $ownerDept) {
+    //insert the new folder name $siteName to subscription ID $subID
+    //print $id." ".$database." - ".$name."<br>";
+    $sql = "INSERT INTO siteowners (ownerFirstName, ownerLastName, ownerEmail, ownerDept) VALUES (?,?,?,?)";
+    //print $sql;
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssss", $ownerFirstName, $ownerLastName, $ownerEmail, $ownerDept);
+
+    if ($stmt->execute() == TRUE) {
+        //$last_id = $conn->insert_id;
+        $message = "The Site Owner ".$ownerFirstName . " ". $ownerLastName ." successfully added";
+    }
+    else {
+        $message = "Ooops. There was a problem adding the siteFolder";
+    }
+    $stmt->close();
+    return $message;
+}
