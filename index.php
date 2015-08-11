@@ -32,7 +32,7 @@ if (isset($jsfile)) {
             <li><a href="addSubscription.php">Add Subscription</a></li>
             <li><a href="addfolder.php">Add Folder</a></li>
             <li><a href="displayFolders.php">Display folder</a></li>
-            <li><a href="addAliases.php">Add Aliases</a></li>
+            <li><a href="addSiteOwner.php">Add Site Owner</a></li>
           </ul>
         </div>
       </nav>
