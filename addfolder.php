@@ -5,9 +5,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-include'includes/databaseConnection.php';
-include'includes/includeFunctions.php';
-include'index.php';
+include_once'includes/databaseConnection.php';
+include_once'includes/includeFunctions.php';
+include_once'index.php';
 //include'addAliases.php';
 
 //check to see if it needs to display add subscription form
@@ -68,7 +68,7 @@ if (!isset($_REQUEST) || count($_REQUEST)==0) {
   else {
     $conn = dbConnect();
     //Write values to siteFolder table
-    $message .= addSitePrepare($conn, $folderName, $_POST['subID'], $dbName).'<br>';
+    $message .= addSitePrepare($conn, $folderName, $_POST['subID'], $_POST['repoName'], $dbName).'<br>';
     //Write aliases to siteFolder table
     $folderID = getID($conn, $folderName, 'folderName', 'sitefolders');
     //print 'folderName '.$folderID;

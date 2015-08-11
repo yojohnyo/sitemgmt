@@ -64,26 +64,26 @@ function addDBPrepare($conn, $name, $id, $table, $nameColumn, $idColumn) {
   $sql = "INSERT INTO " . $table . " (" . $nameColumn . ", " . $idColumn . ") VALUES (?,?)";
   //print $sql;
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("ss", $name, $id);
+  $stmt->bind_param("si", $name, $id);
 
   if ($stmt->execute() == TRUE) {
     //$last_id = $conn->insert_id; 
     $message = $name . " successfully added";
   }
   else {
-    $message = "Ooops. There was a problem adding the siteFolder";
+    $message = "Ooops. There was a problem adding this";
   }
   $stmt->close();
   return $message;
 }
 
-function addSitePrepare($conn, $name, $id, $database) {
+function addSitePrepare($conn, $name, $id, $repo, $database) {
   //insert the new folder name $siteName to subscription ID $subID
   //print $id." ".$database." - ".$name."<br>";
-  $sql = "INSERT INTO sitefolders (folderName, subscriptionsID, databaseName) VALUES (?,?,?)";
+  $sql = "INSERT INTO sitefolders (folderName, subscriptionsID, databaseName, repositoryName) VALUES (?,?,?,?)";
   //print $sql;
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("sss", $name, $id, $database);
+  $stmt->bind_param("siss", $name, $id, $database, $repo);
 
   if ($stmt->execute() == TRUE) {
     //$last_id = $conn->insert_id; 
@@ -176,4 +176,31 @@ function writeDBtoAcquia($dbName, $subName) {
   // close curl resource to free up system resources 
   curl_close($ch);
   return $returnString;
+}
+
+function addEntityIDPrepare($conn, $name, $table, $nameColumn) {
+  //insert the new folder name $siteName to subscription ID $subID
+  $sql = "INSERT INTO " . $table . " (" . $nameColumn . ") VALUES (?)";
+  //print $sql;
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("s", $name);
+
+  if ($stmt->execute() == TRUE) {
+    //$last_id = $conn->insert_id;
+    $message = $name . " successfully added";
+  }
+  else {
+    $message = "Ooops. There was a problem adding the siteFolder";
+  }
+  $stmt->close();
+  return $message;
+}
+
+function getFolderName($conn, $folderID) {
+    $sql = "SELECT folderName FROM sitefolders WHERE id = ".$folderID;
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    $folderName = $row['folderName'];
+    //print $folderID;
+    return $folderName;
 }

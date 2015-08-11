@@ -6,10 +6,10 @@
  * and open the template in the editor.
  */
 
-include'includes/databaseConnection.php';
-include'includes/includeFunctions.php';
+include_once'includes/databaseConnection.php';
+include_once'includes/includeFunctions.php';
 //include'javascriptincludes.js';
-include 'index.php';
+include_once 'index.php';
 
 //Generate list of subscriptions to display
 $sql = "SELECT subscriptionName, id FROM subscriptions";

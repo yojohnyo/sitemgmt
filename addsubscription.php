@@ -5,9 +5,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-include'includes/databaseConnection.php';
-include'includes/includeFunctions.php'; 
-include 'verifySubscription.php';
+include_once'includes/databaseConnection.php';
+include_once'includes/includeFunctions.php';
+include_once 'verifySubscription.php';
 
 
 //check to see if it needs to display add subscription form

@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Add EntityID</title>
     <meta charset="UTF-8">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-
+<div>
+    <div id="alertmsg">
+        <?php print $message;?>
+    </div>
+    <form action="addEntityID.php" method="POST">
+        <p>Enter the name of the Entity ID you would like to add:<br>
+            <input type="text" name="entityID">
+        </p>
+        <input type="submit" name="Add EntityID" value="Add EntityID">
+    </form>
+</div>
 </body>
 </html>

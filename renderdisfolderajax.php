@@ -9,17 +9,17 @@
 $q = "";
 //print "value of q: ".isset($_GET['q']);
 //Find out what value, if any is filtered on
-if (isset($_GET['q'])){
-  include'includes/databaseConnection.php';
-  if ($_GET['q']!=-1) {
-  $q = " AND subscriptions.id = ".intval($_GET['q']);
-  } else {
-    $q = "";
-  }
+if (isset($_GET['q'])) {
+    include 'includes/databaseConnection.php';
+    if ($_GET['q'] != -1) {
+        $q = " AND subscriptions.id = " . intval($_GET['q']);
+    } else {
+        $q = "";
+    }
 }
 $sql = "SELECT subscriptions.subscriptionName, sitefolders.folderName, sitefolders.id "
     . "FROM subscriptions INNER JOIN sitefolders "
-    . "WHERE subscriptions.id = sitefolders.subscriptionsID ".$q
+    . "WHERE subscriptions.id = sitefolders.subscriptionsID " . $q
     . " ORDER BY subscriptions.subscriptionName, sitefolders.folderName";
 //print $sql;
 
@@ -29,23 +29,24 @@ $output = '<div id="txtHint"><table border="1">'
 
 $conn = dbConnect();
 $result = $conn->query($sql);
-if ($result->num_rows > 0){
-  while($row = $result->fetch_assoc()) {
-    //var_dump($row);
-    $output .='<tr>';
-    foreach ($row as $key=>$value){
-      if ($key != 'id'){
-      $output.='<td>'.$value.'</td>';
-      } else {
-        $output.='<td><a href ="siteInfo.php?folderID='.$value.'">Site Information</a></td>';
-      }
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        //var_dump($row);
+        $output .= '<tr>';
+        foreach ($row as $key => $value) {
+            if ($key != 'id') {
+                $output .= '<td>' . $value . '</td>';
+            } else {
+                $output .= '<td><a href ="siteInfo.php?folderID=' . $value . '">Site Information</a></td>';
+                $output .= '<td><a href ="addPRDAlias.php?folderID=' . $value . '">Add Alias</a></td>';
+            }
+        }
+        $output .= '</tr>';
     }
-    $output .='</tr>';
-  }
-  $output .='</table></div>';
-  print $output;
+    $output .= '</table></div>';
+    print $output;
 } else {
-  $message = "No folders were found";
+    $message = "No folders were found";
 }
 connectClose($conn);
 
