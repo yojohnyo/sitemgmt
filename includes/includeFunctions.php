@@ -77,13 +77,13 @@ function addDBPrepare($conn, $name, $id, $table, $nameColumn, $idColumn) {
   return $message;
 }
 
-function addSitePrepare($conn, $name, $id, $repo, $database) {
+function addSitePrepare($conn, $name, $id, $repo, $ownerID, $database) {
   //insert the new folder name $siteName to subscription ID $subID
   //print $id." ".$database." - ".$name."<br>";
-  $sql = "INSERT INTO sitefolders (folderName, subscriptionsID, databaseName, repositoryName) VALUES (?,?,?,?)";
+  $sql = "INSERT INTO sitefolders (folderName, subscriptionsID, databaseName, ownerID, repositoryName) VALUES (?,?,?,?,?)";
   //print $sql;
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("siss", $name, $id, $database, $repo);
+  $stmt->bind_param("sisis", $name, $id, $database,$ownerID, $repo);
 
   if ($stmt->execute() == TRUE) {
     //$last_id = $conn->insert_id; 
