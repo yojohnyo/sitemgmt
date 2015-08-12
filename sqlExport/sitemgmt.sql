@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 11, 2015 at 05:47 AM
+-- Generation Time: Aug 12, 2015 at 06:07 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `aliases` (
   `folderNameID` int(6) NOT NULL,
   `create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=62 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=74 ;
 
 --
 -- Dumping data for table `aliases`
@@ -54,7 +54,19 @@ INSERT INTO `aliases` (`id`, `aliasName`, `folderNameID`, `create_date`) VALUES
 (58, 'adf-dev.umn.edu', 6, '2015-08-11 02:51:06'),
 (59, 'adf-stg.umn.edu', 6, '2015-08-11 02:51:06'),
 (60, 'bedtime-dev.umn.edu', 7, '2015-08-11 02:52:58'),
-(61, 'bedtime-stg.umn.edu', 7, '2015-08-11 02:52:58');
+(61, 'bedtime-stg.umn.edu', 7, '2015-08-11 02:52:58'),
+(62, 'meme-dev.umn.edu', 8, '2015-08-12 03:51:38'),
+(63, 'meme-stg.umn.edu', 8, '2015-08-12 03:51:38'),
+(64, 'nownow-dev.umn.edu', 9, '2015-08-12 03:55:13'),
+(65, 'nownow-stg.umn.edu', 9, '2015-08-12 03:55:13'),
+(66, 'new-dev.umn.edu', 10, '2015-08-12 03:56:31'),
+(67, 'new-stg.umn.edu', 10, '2015-08-12 03:56:31'),
+(68, 'were-dev.umn.edu', 11, '2015-08-12 03:59:13'),
+(69, 'were-stg.umn.edu', 11, '2015-08-12 03:59:13'),
+(70, 'te2-dev.umn.edu', 12, '2015-08-12 03:59:53'),
+(71, 'te2-stg.umn.edu', 12, '2015-08-12 03:59:53'),
+(72, 'no-dev.umn.edu', 13, '2015-08-12 04:01:20'),
+(73, 'no-stg.umn.edu', 13, '2015-08-12 04:01:20');
 
 -- --------------------------------------------------------
 
@@ -113,21 +125,28 @@ CREATE TABLE IF NOT EXISTS `sitefolders` (
   `repositoryName` varchar(30) DEFAULT NULL,
   `launchDate` timestamp NULL DEFAULT NULL,
   `create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `ownerID` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `sitefolders`
 --
 
-INSERT INTO `sitefolders` (`id`, `folderName`, `subscriptionsID`, `databaseName`, `repositoryName`, `launchDate`, `create_date`) VALUES
-(1, 'st.umn.edu', 1, 'st', NULL, NULL, '2015-07-23 04:17:27'),
-(2, 'wife.umn.edu', 3, 'wife', NULL, NULL, '2015-07-23 04:18:15'),
-(3, 'site.umn.edu', 1, 'site', NULL, NULL, '2015-08-10 03:20:48'),
-(4, 'fairy.umn.edu', 1, 'fairy', 'fairly.com', NULL, '2015-08-10 03:32:32'),
-(5, 'mysite.umn.edu', 1, 'mysite', '', NULL, '2015-08-11 02:32:31'),
-(6, 'adf.umn.edu', 2, 'adf', '', NULL, '2015-08-11 02:51:06'),
-(7, 'bedtime.umn.edu', 1, 'bedtime', '', NULL, '2015-08-11 02:52:58');
+INSERT INTO `sitefolders` (`id`, `folderName`, `subscriptionsID`, `databaseName`, `repositoryName`, `launchDate`, `create_date`, `ownerID`) VALUES
+(1, 'st.umn.edu', 1, 'st', NULL, NULL, '2015-07-23 04:17:27', 0),
+(2, 'wife.umn.edu', 3, 'wife', NULL, NULL, '2015-07-23 04:18:15', 0),
+(3, 'site.umn.edu', 1, 'site', NULL, NULL, '2015-08-10 03:20:48', 0),
+(4, 'fairy.umn.edu', 1, 'fairy', 'fairly.com', NULL, '2015-08-10 03:32:32', 0),
+(5, 'mysite.umn.edu', 1, 'mysite', '', NULL, '2015-08-11 02:32:31', 0),
+(6, 'adf.umn.edu', 2, 'adf', '', NULL, '2015-08-11 02:51:06', 0),
+(7, 'bedtime.umn.edu', 1, 'bedtime', '', NULL, '2015-08-11 02:52:58', 0),
+(8, 'meme.umn.edu', 1, 'meme', '', NULL, '2015-08-12 03:51:38', 1),
+(9, 'nownow.umn.edu', 2, 'nownow', '', NULL, '2015-08-12 03:55:13', 1),
+(10, 'new.umn.edu', 4, 'new', '', NULL, '2015-08-12 03:56:31', 1),
+(11, 'were.umn.edu', 2, 'were', '', NULL, '2015-08-12 03:59:13', 1),
+(12, 'te2.umn.edu', 2, 'te2', '', NULL, '2015-08-12 03:59:53', 1),
+(13, 'no.umn.edu', 2, 'no', 'st', NULL, '2015-08-12 04:01:20', 1);
 
 -- --------------------------------------------------------
 
