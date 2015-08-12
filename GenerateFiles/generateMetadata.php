@@ -6,8 +6,8 @@
  * and open the template in the editor.
  */
 
-include '../includes/databaseConnection.php';
-include '../includes/includeFunctions.php';
+include_once '../includes/databaseConnection.php';
+include_once '../includes/includeFunctions.php';
 
 $conn = dbConnect();
 $sql = 'SELECT fileHead, fileEnd, fileSubstitution FROM filecontents WHERE id ="1"';
@@ -40,7 +40,7 @@ if ($result->num_rows > 0) {
 connectClose($conn);
 // $fileEnd;
 $metadata .= $fileEnd;
-file_put_contents('../generatedFiles/metadata.xml', $metadata);
+file_put_contents('../GeneratedFiles/metadata.xml', $metadata);
 //print $metadata;
 
 

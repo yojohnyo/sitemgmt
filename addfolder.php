@@ -87,6 +87,10 @@ if (isset($_REQUEST) && count($_REQUEST) != 0) {
         $message .= addDBPrepare($conn, $alias1, $folderID, 'aliases', 'aliasName', 'folderNameID') . '<br>';
         $message .= addDBPrepare($conn, $alias2, $folderID, 'aliases', 'aliasName', 'folderNameID') . '<br>';
         connectClose($conn);
+        //@todo get the automatic file generation working
+        //@todo record planned launch date
+        //@todo update db to record modified date
+        //include_once 'GenerateFiles/generateMetadata.php';
         //  print $message;
     }
     //include 'index.php';
