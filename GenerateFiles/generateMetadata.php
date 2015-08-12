@@ -18,6 +18,7 @@ $fileHead = $row['fileHead'];
 $fileEnd = $row['fileEnd'];
 $fileSub = $row['fileSubstitution'];
 $subsString = '---SUBSTITUTION---';
+$metadata = $fileHead;
 $sql = "SELECT folderName FROM sitefolders";
 $result = $conn->query($sql);
 
@@ -39,7 +40,8 @@ if ($result->num_rows > 0) {
 connectClose($conn);
 // $fileEnd;
 $metadata .= $fileEnd;
-print $metadata;
+file_put_contents('../generatedFiles/metadata.xml', $metadata);
+//print $metadata;
 
 
 
